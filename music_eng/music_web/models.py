@@ -1,20 +1,27 @@
 from django.db import models
 
 class Song(models.Model):
-    name = models.CharField(max_length=256, blank=False, unique=True)
+    name = models.models.TextField()
     musicalGenre = models.ForeignKey(MusicalGenre, on_delete=models.CASCADE)
-    album = models.ForeignKey(Album, on_delete=models.PROTECT, blank=False)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    date = models.DateField()
+    image = models.ImageField()
+    audio_file= models.FileField(blank = True, null = True)
+    audio_link= models.models.FileField(max_length=200,blank=True,null = True)
+    duration= models.CharField(max_length=20)
+    paginate_by=2
     
     class Meta:
         ordering = ['name']
         
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
 
 
 class Playlist(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.models.TextField()
     song = models.ManyToManyField(Song)
 
     class Meta:
@@ -26,7 +33,7 @@ class Playlist(models.Model):
            
            
 class Album(models.Model):
-    title = models.CharField(max_length=100, blank=False, unique=True)
+    title = models.models.TextField()
     author = models.ForeignKey(Author, on_delete=models.PROTECT, blank=False)
     
     def __str__(self):
@@ -34,28 +41,15 @@ class Album(models.Model):
 
            
 class Author(models.Model):
-    name = models.CharField(max_length=100, blank=False, unique=True)
-    song = models.ManyToManyField(Song)
+    name = models.models.TextField()
+    song = models.ManyToManyField()
     musicalGenre = models.ForeignKey(MusicalGenre, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
         
-              
-              
-class DatePublication(models.Model):
-    date = models.DateField()
-    song = models.ManyToManyField(Song)
-    author = models.ManyToManyField(Author)
-    musicalGenre = models.ForeignKey(MusicalGenre, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.date
-        
-        
-        
 class MusicalGenre(models.Model):
-    genre = models.CharField(max_length=30)
+    genre = models.models.TextField()
     
     class Meta:
         ordering = ['genre']
