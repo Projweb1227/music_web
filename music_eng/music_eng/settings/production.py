@@ -1,11 +1,13 @@
+from .logging import *
 from .base import *
 import environ
 import os
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, [])
+    ALLOWED_HOSTS=(list, []),
 )
+
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -24,6 +26,7 @@ DATABASES = {
         'PASSWORD': env('DB_PASS'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
+        # env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
 
     }
 }
