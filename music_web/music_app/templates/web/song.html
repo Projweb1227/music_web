@@ -1,0 +1,23 @@
+
+
+
+{% block content %}
+  <h1>{{ song.name }}</h1>
+  <p><strong>Genre:</strong> {{ song.musicalGenre }}</p>
+  <p><strong>Album:</strong> {{ song.album }}</p>
+  <p><strong>Author:</strong> {{ song.author }}</p>
+  <p><strong>Date:</strong> {{ song.date }}</p>
+  <img src="{{ song.image.url }}" alt="{{ song.name }} image">
+  {% if song.audio_file %}
+    <audio controls>
+      <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  {% elif song.audio_link %}
+    <a href="{{ song.audio_link }}">Listen here</a>
+  {% else %}
+    <p>No audio available.</p>
+  {% endif %}
+  <p><strong>Duration:</strong> {{ song.duration }}</p>
+{% endblock %}
+<a href="{% url 'home' %}">Volver a inicio</a>
