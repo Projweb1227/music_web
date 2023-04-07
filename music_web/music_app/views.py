@@ -1,6 +1,7 @@
+
 from django.shortcuts import render
 from django.http import HttpResponse
-from web.models import Song, Playlist, Album, Author, DatePublication, MusicalGenre
+from .models import *
 from django.views import generic
 
 def home(request):
@@ -15,9 +16,6 @@ def song(request, song_id):
         try:
             song = Song.objects.get(pk=song_id)
         except Song.DoesNotExist:
-                raise Http404("Aquesta canço no existeix")
+                raise HttpResponse("Aquesta canço no existeix")
         return render(request, 'web/song.html', {'song': song})
 
-class DatePublicationView(generic.DetailView):
-       model = DatePublication
-       template_name = 'web/datepublication.html'
