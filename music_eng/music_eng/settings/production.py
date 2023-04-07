@@ -18,15 +18,19 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASS'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-        # env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASS'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#         # env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
 
-    }
+#     }
+# }
+
+DATABASES = {
+    "default": env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3"),
 }

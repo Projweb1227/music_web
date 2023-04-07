@@ -19,9 +19,11 @@ BASE_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_APPS = []
+LOCAL_APPS = [
+    "music_web"
+]
 
-INSTALLED_APPS = BASE_APPS + THIRD_APPS
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS
 
 
 BASE_MIDDLEWARE = [
