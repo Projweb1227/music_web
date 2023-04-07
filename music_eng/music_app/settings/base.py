@@ -42,7 +42,7 @@ THIRD_MIDDLEWARE = [
 
 MIDDLEWARE = BASE_MIDDLEWARE + THIRD_MIDDLEWARE
 
-ROOT_URLCONF = "music_eng.urls"
+ROOT_URLCONF = "music_app.urls"
 
 TEMPLATES = [
     {
@@ -60,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "music_eng.wsgi.application"
+WSGI_APPLICATION = "music_app.wsgi.application"
 
 
 # Database
