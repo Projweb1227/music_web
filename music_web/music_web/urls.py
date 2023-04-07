@@ -1,8 +1,7 @@
-"""
-URL configuration for music_eng project.
+"""music_web URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+    https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -16,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from music_app import views
+
+
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('song/<int:song_id>', views.song, name='song'),
+    path('playlist/', views.playlist, name='playlist'),
+    path('albumlist/', views.album_list, name='album_list'),
+
 ]
