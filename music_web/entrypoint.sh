@@ -1,14 +1,19 @@
 #!/bin/bash
 
-python manage.py collectstatic --no-input # --settings=music_web.settings.production
+production=music_web.settings.production
+development=music_web.settings.development
+
+settings_in_use=$production
+
+python manage.py collectstatic --no-input --settings=$settings_in_use
 
 echo "Waiting for database..."
-python manage.py waitfordb # --settings=music_web.settings.production
+python manage.py waitfordb --settings=$settings_in_use
 
-# python manage.py makemigrations --settings=music_web.settings.production
+
 echo "Doing migrations..."
-python manage.py migrate 
+python manage.py migrate --settings=$settings_in_use
 
-# python manage.py runserver --settings=music_eng.settings.production
-gunicorn --env DJANGO_SETTINGS_MODULE=music_web.settings.production --bind 0.0.0.0:8000 music_web.wsgi:application
+# python manage.py runserver --settings=settings_in_use
+gunicorn --env DJANGO_SETTINGS_MODULE=$settings_in_use --bind 0.0.0.0:8000 music_web.wsgi:application
 

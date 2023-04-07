@@ -27,10 +27,12 @@ ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
 #         'HOST': env('DB_HOST'),
 #         'PORT': env('DB_PORT'),
 #         # env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
-
 #     }
 # }
 
 DATABASES = {
     "default": env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3"),
 }
+
+STATIC_ROOT = "static/"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
