@@ -20,7 +20,7 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    "music_web"
+    "music_app"
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS
@@ -42,7 +42,7 @@ THIRD_MIDDLEWARE = [
 
 MIDDLEWARE = BASE_MIDDLEWARE + THIRD_MIDDLEWARE
 
-ROOT_URLCONF = "music_app.urls"
+ROOT_URLCONF = "music_web.urls"
 
 TEMPLATES = [
     {
@@ -60,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "music_app.wsgi.application"
+WSGI_APPLICATION = "music_web.wsgi.application"
 
 
 # Database
