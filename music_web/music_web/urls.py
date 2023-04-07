@@ -25,9 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
-    path('song/<int:song_id>', views.song, name='song'),
+    path('song/<str:name>/', views.song, name='song'),
     path('playlist/', views.playlist, name='playlist'),
-    path('albumlist/', views.album_list, name='album_list'),
     path('register/', views.register, name='register'),
 
 ]
