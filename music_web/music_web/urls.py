@@ -16,14 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from music_app import views
+from django.contrib.auth import views as auth_views
+from django.urls import include
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
     path('song/<int:song_id>', views.song, name='song'),
     path('playlist/', views.playlist, name='playlist'),
     path('albumlist/', views.album_list, name='album_list'),
+    path('register/', views.register, name='register'),
 
 ]
