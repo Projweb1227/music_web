@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Table Example with Bootstrap</title>
+        <title>Playlist</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <style>
             .custom-card {
@@ -17,11 +17,11 @@
     </head>
     
     <body style="background-color: #90EE90;">
-        <a href="{% url 'home' %}" class="btn btn-success mt-3 " style="margin-left: 10px;">Volver a inicio</a>
+        <a href="{% url 'home' %}" class="btn btn-success mt-3 shadow" style="margin-left: 10px;">Volver a inicio</a>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <div class="card custom-card">
+                    <div class="card custom-card shadow border-dark border-4" >
                         <div class="card-body " style="background-color: #32CD32;" >
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToyPIKiZgx8rZ7tyE8zx1xgefOB45hNJ_LkQ&usqp=CAU" class="card-img-top"  style="margin-bottom: 10px;">
                             <h1 style="font-size: 24px; font-weight: bold; display: flex; justify-content: center; align-items: center;">Playlist</h1>
@@ -32,13 +32,13 @@
             </div>
         </div>
         <div class="container mt-5">
-            <table class="table">
+            <table class="table shadow">
                 <thead class="thead-custom">
                     <tr>
-                        <th>Canción</th>
-                        <th>Autor</th>
-                        <th>Álbum</th>
-                        <th>Género musical</th>
+                        <th>Song</th>
+                        <th>Author</th>
+                        <th>album</th>
+                        <th>Musical genre</th>
                     </tr>
                 </thead>
                 <tbody>
