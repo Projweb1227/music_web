@@ -6,6 +6,7 @@ from django.views import generic
 from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 
 
 def user_is_authenticated(user):
@@ -58,3 +59,4 @@ def play_song(request, name):
     response['Content-Disposition'] = 'attachment; filename=%s' % song.audio_file.name
     response.write(song.audio_file.read())
     return response
+
