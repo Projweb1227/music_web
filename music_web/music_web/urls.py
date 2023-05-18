@@ -18,6 +18,8 @@ from django.urls import path
 from music_app import views
 from django.contrib.auth import views as auth_views
 from django.urls import include
+from django.contrib import admin
+from django.urls import path, include
 
 
 
@@ -25,8 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
-    path('song/<str:name>/', views.song, name='song'),
     path('playlist/', views.playlist, name='playlist'),
-    path('register/', views.register, name='register'),
+    path('songs/', views.song_list, name='song_list'),
 
 ]

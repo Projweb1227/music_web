@@ -7,33 +7,18 @@ from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
-
-
-def user_is_authenticated(user):
-    return user.is_authenticated
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
 
 
+class HomeView:
+    template_name = 'base.html'
 
-@user_passes_test(user_is_authenticated, login_url='register')
+
 def home(request):
-        songs = Song.objects.all()
-        playlists = Playlist.objects.all()
-        albums = Album.objects.all()
-        authors = Author.objects.all()
-        musicalgenres = MusicalGenre.objects.all()
-        return render(request, "web/index.html", {'songs': songs, 'playlists': playlists, 'albums': albums, 'authors': authors, 'musicalgenres': musicalgenres})
+    return render(request, 'base.html')
 
 
 def playlist(request):
@@ -45,18 +30,11 @@ def playlist(request):
     return render(request, 'web/playlist.html', {'songs': songs})
 
 
-def song(request, name):
-    song = get_object_or_404(Song, name=name)
-    context = {'song': song}
-    return render(request, 'web/song.html', context)
+def song_list(request):
+    songs = Song.objects.all()
+    return render(request, 'song_list.html', {'songs': songs})
 
-def play_song(request, name):
-    song = get_object_or_404(Song, name=name)
-    file_url = song.audio_link or song.audio_file.url
-    response = HttpResponse()
-    response['Content-Type'] = 'audio/mpeg'
-    response['Content-Length'] = song.audio_file.size
-    response['Content-Disposition'] = 'attachment; filename=%s' % song.audio_file.name
-    response.write(song.audio_file.read())
-    return response
+
+
+
 
