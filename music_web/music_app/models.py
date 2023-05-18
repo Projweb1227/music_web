@@ -24,6 +24,10 @@ class Song(models.Model):
         return self.name
 
 
+    
+
+
+
 class Album(models.Model):
     title = models.TextField()
     author = models.ForeignKey('Author', on_delete=models.PROTECT, blank=False)
