@@ -1,76 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Play Song</title>
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
 </head>
-
 <body>
     <h1>Play Song</h1>
     <h2>{{ song.name }}</h2>
-    <button onclick="playAudio()">Play</button>
-    <button onclick="pauseAudio()">Pause</button>
-    <button onclick="stopAudio()">Stop</button>
+    <audio id="audioPlayer" src="{{ song.audio_file.url }}"></audio>
+    <br>
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="stopButton">Stop</button>
     <br>
     <button onclick="goBack()">Back</button>
 
     <script>
-        var vlcPlayer;
+        $(document).ready(function() {
+            var audio = $("#audioPlayer")[0];
 
-        function playAudio() {
-            vlcPlayer.play();
-        }
+            $("#playButton").click(function() {
+                audio.play();
+            });
 
-        function pauseAudio() {
-            vlcPlayer.pause();
-        }
+            $("#pauseButton").click(function() {
+                audio.pause();
+            });
 
-        function stopAudio() {
-            vlcPlayer.stop();
-        }
+            $("#stopButton").click(function() {
+                audio.pause();
+                audio.currentTime = 0;
+            });
 
-        function goBack() {
-            window.history.back();
-        }
-
-        document.addEventListener("DOMContentLoaded", function (event) {
-
-            vlcPlayer = new VLCPlayer();
-
-            // Even with the IDE warning, THIS works
-            {% if song.audio_file %}
-                vlcPlayer.openMedia("{{ song.audio_file.url }}");
-            {% endif %}
+            function goBack() {
+                window.history.back();
+            }
         });
-
-        function VLCPlayer() {
-            this.instance = null;
-            this.media = null;
-
-            this.openMedia = function (url) {
-                this.instance = new vlc.Instance();
-                this.media = this.instance.mediaNew(url);
-                this.media.parseSync();
-                this.player = this.media.playerNewFromMedia();
-                this.player.play();
-            };
-
-            this.play = function () {
-                if (this.player)
-                    this.player.play();
-            };
-
-            this.pause = function () {
-                if (this.player)
-                    this.player.pause();
-            };
-
-            this.stop = function () {
-                if (this.player)
-                    this.player.stop();
-            };
-        }
     </script>
 </body>
-
 </html>
+

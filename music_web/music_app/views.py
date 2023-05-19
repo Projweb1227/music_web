@@ -16,6 +16,11 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
+
 
 #Login
 class LoginPageView(View):
@@ -50,7 +55,7 @@ class SignUpPageView(View):
 class HomeView:
     template_name = "base.html"
 
-
+@login_required
 def home(request):
     return render(request, "base.html")
 

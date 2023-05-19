@@ -6,11 +6,20 @@
 <body>
     <h1>Song List</h1>
     <ul>
+        <a href="{% url 'songs:song_create' %}">Crear</a>
         {% for song in songs %}
             <li>
                 <a href="{% url 'songs:play_song' song.id %}">{{ song.name }}</a>
+                
+                <a href="{% url 'songs:song_details' song.id %}">Detalles</a>
+                
+
+
+
             </li>
         {% endfor %}
+
     </ul>
+    
 </body>
 </html>
