@@ -110,10 +110,6 @@ class SongCreate(LoginRequiredMixin, CreateView):
     template_name = "songs/form.html"
     form_class = SongForm
 
-    def post(self, request):
-        if not request.user.is_authenticated:
-            return render(request, 'songs/error.html', {'message': 'You must be logged in to submit the form.'})
-        
 
     def form_valid(self, form):
         form.instance.user = self.request.user
