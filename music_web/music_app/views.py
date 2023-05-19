@@ -1,60 +1,41 @@
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 from .models import *
 from django.views import generic
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, SongForm
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 
 
-def user_is_authenticated(user):
-    return user.is_authenticated
+class HomeView:
+    template_name = "base.html"
 
 
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
-
-
-
-@user_passes_test(user_is_authenticated, login_url='register')
 def home(request):
-        songs = Song.objects.all()
-        playlists = Playlist.objects.all()
-        albums = Album.objects.all()
-        authors = Author.objects.all()
-        musicalgenres = MusicalGenre.objects.all()
-        return render(request, "web/index.html", {'songs': songs, 'playlists': playlists, 'albums': albums, 'authors': authors, 'musicalgenres': musicalgenres})
+    return render(request, "base.html")
 
 
 def playlist(request):
-    author_id = request.GET.get('author_id')
+    author_id = request.GET.get("author_id")
     if author_id:
-        songs = Song.objects.filter(author=author_id).order_by('name')
+        songs = Song.objects.filter(author=author_id).order_by("name")
     else:
-        songs = Song.objects.all().order_by('name')
-    return render(request, 'web/playlist.html', {'songs': songs})
+        songs = Song.objects.all().order_by("name")
+    return render(request, "web/playlist.html", {"songs": songs})
 
 
-def song(request, name):
-    song = get_object_or_404(Song, name=name)
-    context = {'song': song}
-    return render(request, 'web/song.html', context)
+def song_list(request):
+    songs = Song.objects.all()
+    return render(request, "song_list.html", {"songs": songs})
 
-def play_song(request, name):
-    song = get_object_or_404(Song, name=name)
-    file_url = song.audio_link or song.audio_file.url
-    response = HttpResponse()
-    response['Content-Type'] = 'audio/mpeg'
-    response['Content-Length'] = song.audio_file.size
-    response['Content-Disposition'] = 'attachment; filename=%s' % song.audio_file.name
-    response.write(song.audio_file.read())
-    return response
+
+# HTML views
+class SongCreate(CreateView):
+    model = Song
+    template_name = "songs/form.html"
+    form_class = SongForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(SongCreate, self).form_valid(form)
