@@ -82,6 +82,12 @@ def play_song(request, song_id):
     return render(request, "play_song.html", {"song": song})
 
 @login_required(login_url='login')
+def delete_song(request, pk):
+    song = get_object_or_404(Song, pk=pk)
+    song.delete()
+    return redirect('login')
+
+@login_required(login_url='login')
 def edit_song(request, pk):
     song = get_object_or_404(Song, pk=pk)
 

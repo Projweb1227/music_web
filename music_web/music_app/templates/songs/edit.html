@@ -6,6 +6,8 @@
     {% csrf_token %}
     <table>
         {{ form.as_div }}
+        <input type="hidden" name="delete" value="true">
+        <button type="button" class="btn btn-danger mt-3 shadow" id="delete-button">Delete Song</button>
         <script>
             $(document).ready(function () {
                 $("#id_author_new").autocomplete({
@@ -19,10 +21,21 @@
                     delay: 300, // Delay in milliseconds before making the request
                 });
             });
+
+            
         </script>
     </table>
     <div class="text-center">
         <input type="submit" value="Submit" class="btn btn-success mt-3 shadow" />
     </div>
 </form>
+
+
+<script>
+    document.getElementById("delete-button").addEventListener("click", function() {
+        if (confirm("Are you sure you want to delete this song?")) {
+            document.getElementById("delete-form").submit();
+        }
+    });
+</script>
 {% endblock %}

@@ -16,6 +16,7 @@ urlpatterns = [
     ),
     path("song/<int:pk>", views.SongDetail.as_view(), name="song_details"),
     path('edit/<int:pk>', views.edit_song, name='edit_song'),
+    path('delete/<int:pk>/', views.delete_song, name='delete_song'),
 
 
     #Autocompletion
