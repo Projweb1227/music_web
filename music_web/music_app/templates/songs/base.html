@@ -1,94 +1,106 @@
 <html>
+
 <head>
-   <title>{% block title %}Songs{% endblock %}</title>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>{% block title %}Songs{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-   <style>
+    <style>
+        body {
+            background-color: #90EE90;
+        }
 
-    body {
-        background-color: #90EE90;
-    }
+        ul li {
+            /*Treure el "·" de la llista*/
+            list-style: none;
+        }
 
-    ul li { /*Treure el "·" de la llista*/
-        list-style: none;
-    }
+        /*login i home¿?*/
 
-    /*login i home¿?*/
+        .wrapper {
+            display: inline-block;
+        }
 
-    .center {
-        float: left;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: auto;
-    }
+        .center {
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
 
-    #content {
-        background-color: #fff;
-        box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.131);
-        width: 500px;
-        height: 700px;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 50px;
-    }
+        #content {
+            background-color: #fff;
+            box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.131);
+            width: 500px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
 
-    div label { /*Titols*/
-        font-weight: 500;   /*L'altre te un font-family diferent*/
-        font-size: 18px;
-    }
+        div label {
+            /*Titols*/
+            font-weight: 500;
+            /*L'altre te un font-family diferent*/
+            font-size: 18px;
+        }
 
-    #content h2 {
-        padding-top: 60px;
-        margin: 0px;
-    }
+        #content h2 {
+            padding-top: 60px;
+            margin: 0px;
+        }
 
-    #content form {
-        margin-top: 40px;
-    }
+        #content form {
+            margin-top: 40px;
+        }
 
-    #content form div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-    }
+        #content form div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    /* Modify (Pots eliminar el de baix i et quedarà com quedava a la captura) inicia ------> */
+        /* Modify (Pots eliminar el de baix i et quedarà com quedava a la captura) inicia ------> */
 
-    #header {
-        display: flex;
-        width: 100px;   /*error?¿*/
-        float: left;
-    }
+        #header {
+            display: flex;
+            width: 100px;
+            /*error?¿*/
+            float: left;
+        }
 
-    #sidebar{
-        display: flex;
-        width: 100px;
-    }
+        #sidebar {
+            display: flex;
+            width: 100px;
+        }
 
-    #sidebar > ul { /* Molt més forçat entrar dins del div, però em donava error al fer #sliderbar ul{ */
-        padding: 0px ;
-        margin: 0px;
-    }
+        #sidebar>ul {
+            /* Molt més forçat entrar dins del div, però em donava error al fer #sliderbar ul{ */
+            padding: 0px;
+            margin: 0px;
+        }
 
-    #header > p {
-        padding: 0px;
-    }
+        #header>p {
+            padding: 0px;
+        }
 
-    #sidebar > ul > li {
-        padding-left: 6px;
-    }
+        #sidebar>ul>li {
+            padding-left: 6px;
+        }
 
-    #sidebar > ul > li > a {
-        margin: 0px;
-    }
+        #sidebar>ul>li>a {
+            margin: 0px;
+        }
 
-    /* <----------- finalitza */
-
+        /* <----------- finalitza */
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
 
 </head>
 
@@ -96,26 +108,28 @@
 
     <div id="header">
         {% block header %}
-            {% if user.is_authenticated %}
-                <p>User: {{ user.username }} | <a href="{% url 'logout' %}?next={{request.path}}" class="btn btn-success mt-3 shadow">logout</a></p>
-            {% else %}
-                <p><a href="{% url 'login' %}?next={{request.path}}" class="btn btn-success mt-3 shadow" style="margin-left: 10px;">login</a></p>
-            {% endif %}
+        {% if user.is_authenticated %}
+        <p>User: {{ user.username }} | <a href="{% url 'logout' %}?next={{request.path}}"
+                class="btn btn-success mt-3 shadow">logout</a></p>
+        {% else %}
+        <p><a href="{% url 'login' %}?next={{request.path}}" class="btn btn-success mt-3 shadow"
+                style="margin-left: 10px;">login</a></p>
+        {% endif %}
         {% endblock %}
     </div>
 
     <div id="sidebar">
         {% block sidebar %}
-            <ul>
-                <li><a href="/songs/" class="btn btn-success mt-3 shadow">Home</a></li>
-            </ul>
+        <ul>
+            <li><a href="/songs/" class="btn btn-success mt-3 shadow">Home</a></li>
+        </ul>
         {% endblock %}
     </div>
-    
-    <div class="center">
+
+    <div class="center wrapper">
         <div id="content">
             {% block content %}
-                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
             {% endblock %}
         </div>
     </div>
@@ -125,4 +139,5 @@
     </div>
 
 </body>
+
 </html>

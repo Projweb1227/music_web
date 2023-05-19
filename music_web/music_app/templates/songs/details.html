@@ -1,0 +1,177 @@
+{% block content %}
+<html>
+
+<head>
+
+    <title>Detalls</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #90EE90;
+        }
+
+        .center2 {
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: auto;
+        }
+
+        #content {
+            background-color: #fff;
+            box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.131);
+            width: 1000px;
+            height: 700px;
+            display: flex;
+            align-items: center;
+            margin-top: 120px;
+            /*amb botons afegir -70px*/
+        }
+
+        .card-body {
+            display: flex;
+            float: left;
+            justify-content: center;
+            align-items: center;
+            width: 500px;
+        }
+
+        .card-body .card-img-top {
+            width: 450px;
+            height: 450px;
+            object-fit: cover;
+            margin-top: 30px;
+        }
+
+        .detalls {
+            /*background-color: rgb(180, 169, 118);*/
+            display: flex;
+            float: left;
+            align-items: left;
+            justify-content: center;
+            flex-direction: column;
+            width: 500px;
+            height: 700px;
+            padding: 20px;
+        }
+
+        h5 {
+            font-size: 32px;
+            padding-bottom: 20px;
+        }
+
+        #info {
+            position: relative;
+            float: left;
+            display: flex;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        h3 {
+            font-size: 25px;
+            margin-left: 20px;
+            color: grey;
+            font-weight: 300px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            margin-right: 10px;
+        }
+
+        .logout-button {
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="header">
+        {% block header %}
+        <div class="header-container">
+            {% if user.is_authenticated %}
+            <div class="user-info">
+                <p>User: {{ user.username }}</p>
+            </div>
+            <div class="logout-button">
+                <a href="{% url 'logout' %}?next={{request.path}}" class="btn btn-success mt-3 shadow">Logout</a>
+            </div>
+            {% else %}
+            <div class="logout-button">
+                <a href="{% url 'login' %}?next={{request.path}}" class="btn btn-success mt-3 shadow">Login</a>
+            </div>
+            {% endif %}
+            {% if song %}
+            <a href="{% url 'songs:edit_song' pk=song.pk %}" class="btn btn-success mt-3 shadow"
+                style="position: absolute; top: 10px; right: 10px;">Edit Song</a>
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+
+
+    <div class="center2">
+
+
+        <div id="content">
+
+            <div class="card-body">
+                <img src="https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/1631/posts/32859/image/album-cover-maker_5a.jpg"
+                    class="card-img-top">
+            </div>
+
+            <div class="detalls">
+                <h5>Song Detaiis</h5>
+
+                <div id="info">
+                    <h2>Tittle:</h2>
+                    <h3>{{ song.name }}</h3>
+                </div>
+
+                <div id="info">
+                    <h2>Author:</h2>
+                    <h3>{{ song.author }}</h3>
+                </div>
+
+                <div id="info">
+                    <h2>Album:</h2>
+                    <h3>{{ song.album }}</h3>
+                </div>
+
+                <div id="info">
+                    <h2>Genre:</h2>
+                    <h3>{{ song.musicGenre }}</h3>
+                </div>
+
+                <div id="info">
+                    <h2>Duration:</h2>
+                    <h3>{{ song.duration }}</h3>
+                </div>
+
+                <div id="date">
+
+                    <h2>Added: {{ song.date }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

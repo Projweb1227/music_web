@@ -14,58 +14,97 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class SongForm(ModelForm):
-    song_name = forms.CharField(label="Song Tittle", max_length=100)
-    author_name = forms.CharField(label="Author", max_length=100)
-    album_name = forms.CharField(label="Album", max_length=100)
-    musical_genre_name = forms.CharField(label="Music Genere", max_length=100)
+    musical_genre_name = forms.ModelChoiceField(
+        queryset=MusicalGenre.objects.all(),
+        label="Genre",
+        required=False,
+        empty_label="Select an existing genre",
+        widget=forms.Select(attrs={"class": "custom-class"}),
+    )
+    author_name = forms.CharField(label="Author", max_length=100, required=True)
+    album_name = forms.CharField(label="Album", max_length=100, required=False)
 
     class Meta:
         model = Song
         fields = [
-            "song_name",
+            "name",
             "author_name",
             "album_name",
             "musical_genre_name",
-            "musicalGenre",
         ]
-        # exclude = ("author","date", "audio_file")
-
-    def checkAuthorExists(self):
-        author_name = self.cleaned_data["author_name"]
-        try:
-            author = Author.objects.get(name=author_name)
-        except Author.DoesNotExist:
-            author = Author.objects.create(name=author_name)
-
-        return author
-
-    def checkMusicalGenereExists(self, musical_genre_name):
-        try:
-            musical_genre = MusicalGenre.objects.get(genre=musical_genre_name)
-        except MusicalGenre.DoesNotExist:
-            musical_genre = MusicalGenre.objects.create(genre=musical_genre_name)
-
-        return musical_genre
-
-    def checkAlbumExists(self, album_name, author):
-        try:
-            album = Album.objects.get(title=album_name, author=author)
-        except:
-            album = Album.objects.create(title=album_name, author=author)
-        return album
+        labels = {"name": "Tittle"}
+        widgets = {
+            "name": forms.TextInput(),
+        }
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.name = self.cleaned_data["song_name"]
-        instance.author = self.checkAuthorExists()
 
-        album_name = self.cleaned_data["album_name"]
+        author_name = self.cleaned_data.get("author_name")
+        instance.author, _ = Author.objects.get_or_create(name=author_name)
+
+        album_name = self.cleaned_data.get("album_name")
         if album_name:
-            instance.album = self.checkAlbumExists(album_name, instance.author)
+            instance.album, _ = Album.objects.get_or_create(
+                title=album_name, author=instance.author
+            )
+
 
         musical_genre_name = self.cleaned_data["musical_genre_name"]
         if musical_genre_name:
-            instance.musicalGenre = self.checkMusicalGenereExists(musical_genre_name)
+            instance.musicalGenre, _ = MusicalGenre.objects.get_or_create(
+                genre=musical_genre_name
+            )
+        else:
+            instance.musicalGenre, _ = MusicalGenre.objects.get_or_create(genre="Other")
+
+        if commit:
+            instance.save()
+        return instance
+
+
+class EditSongForm(forms.ModelForm):
+    muscial_genre = forms.ModelChoiceField(
+        queryset=MusicalGenre.objects.all(),
+        label="Genre",
+        required=False,
+        empty_label="Select an existing genre",
+        widget=forms.Select(attrs={"class": "custom-class"}),
+    )
+    author_new = forms.CharField(label="Author", max_length=100, required=True)
+    album_new = forms.CharField(label="Album", max_length=100, required=False)
+
+    class Meta:
+        model = Song
+        fields = [
+            "name",
+            "author_new",
+            "album_new",
+            "muscial_genre",
+        ]
+        labels = {"name": "Tittle"}
+        widgets = {
+            "name": forms.TextInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["author_new"].initial = self.instance.author.name
+        self.fields["album_new"].initial = self.instance.album.title
+        self.fields["muscial_genre"].initial = self.instance.musicalGenre
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        author_new = self.cleaned_data.get("author_new")
+        album_new = self.cleaned_data.get("album_new")
+
+        author, _ = Author.objects.get_or_create(name=author_new)
+        instance.author = author
+
+        if album_new:
+            album, _ = Album.objects.get_or_create(title=album_new)
+            instance.album = album
+
         if commit:
             instance.save()
         return instance
