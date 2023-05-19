@@ -1,0 +1,12 @@
+{% extends "songs/base.html" %}
+
+{% block content %}
+<h2>multipart</h2>
+<form method="post" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    <table>
+        {{ form.as_div }}
+    </table>
+    <input type="submit" value="Submit"/>
+</form>
+{% endblock %}

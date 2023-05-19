@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} - Music Engine</title>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    
+                    <li>&nbsp<a href="{% url 'song_list' %}">Cançons</a></li>
+                    <li>&nbsp<a href="{% url 'playlist' %}">Playlists</a></li>
+                {% else %}
+                <a class="cta" href="/accounts/login">
+                &nbsp<button>Log In</button>
+                </a>
+                {% endif %}
+            </ul>
+         </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
