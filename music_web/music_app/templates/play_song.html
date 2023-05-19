@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play Song</title>
+</head>
+<body>
+    <h1>Play Song</h1>
+    <h2>{{ song.name }}</h2>
+    <button onclick="playAudio()">Play</button>
+    <button onclick="pauseAudio()">Pause</button>
+    <button onclick="stopAudio()">Stop</button>
+    <br>
+    <button onclick="goBack()">Back</button>
+
+    <script>
+        var vlcPlayer;
+
+        function playAudio() {
+            vlcPlayer.play();
+        }
+
+        function pauseAudio() {
+            vlcPlayer.pause();
+        }
+
+        function stopAudio() {
+            vlcPlayer.stop();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            vlcPlayer = new VLCPlayer();
+            vlcPlayer.openMedia("{{ song.audio_file.url }}");
+        });
+
+        function VLCPlayer() {
+            this.instance = null;
+            this.media = null;
+
+            this.openMedia = function(url) {
+                this.instance = new vlc.Instance();
+                this.media = this.instance.mediaNew(url);
+                this.media.parseSync();
+                this.player = this.media.playerNewFromMedia();
+                this.player.play();
+            };
+
+            this.play = function() {
+                if (this.player)
+                    this.player.play();
+            };
+
+            this.pause = function() {
+                if (this.player)
+                    this.player.pause();
+            };
+
+            this.stop = function() {
+                if (this.player)
+                    this.player.stop();
+            };
+        }
+    </script>
+</body>
+</html>

@@ -14,7 +14,6 @@ class Song(models.Model):
     date = models.DateField()
     image = models.ImageField()
     audio_file = models.FileField(blank=True, null=True)
-    audio_link = models.CharField(max_length=200, blank=True, null=True)
     duration = models.CharField(max_length=10)
 
     class Meta:
@@ -34,7 +33,6 @@ class Album(models.Model):
 class Author(models.Model):
     name = models.TextField()
     musicalGenre = models.ForeignKey(MusicalGenre, on_delete=models.CASCADE)
-    songs = models.ManyToManyField('Song', related_name='authors')
 
 
 class Playlist(models.Model):

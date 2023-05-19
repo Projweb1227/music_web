@@ -1,131 +1,24 @@
-<!DOCTYPE html>
+
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %} Melody</title>
-    <!-- Add Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-    <style>
-        .custom-card {
-            width: 50%;
-            margin: 0 auto;
-            margin-top: 10px;
-        }
-        .thead-custom {
-            background-color: #32CD32; /* Replace with your desired color */
-            color: #030303; /* Replace with your desired text color */
-        }
-        
-    </style>
-</head>
-<body style="background-color: #90EE90;">
-
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
-        {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'song_list' %}">Cançons</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'paylist' %}">Playlists</a></li>
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="/accounts/login">
-                    <button class="btn btn-success">Log In</button>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} - Music Engine</title>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li>&nbsp<a href="{% url 'song_list' %}">Cançons</a></li>
+                    <li>&nbsp<a href="{% url 'paylist' %}">Playlists</a></li>
+                {% else %}
+                <a class="cta" href="/accounts/login">
+                &nbsp<button>Log In</button>
                 </a>
-            </li>
-        {% endif %}
-    </ul>
-</nav> -->
+                {% endif %}
+            </ul>
 
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
-<div class="container" >
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card custom-card border-0 " style="background-color: #90EE90;">
-                <div class="card-body" >
-                    <img src="https://images.squarespace-cdn.com/content/v1/5bb012bbebfc7fd066b157e0/1542410001222-82VJBY1X6TQPL68C437L/Moods%26Melody-Logo.png" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container mt-2 ">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://www.billboard.com/wp-content/uploads/2022/03/50.-Taylor-Swift-%E2%80%981989-2014-album-art-billboard-1240.jpg?w=600" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://imgv3.fotor.com/images/blog-richtext-image/musci-album-of-Blue-Neighbourhood-from-Troye-Sivan.webp" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://images.template.net/wp-content/uploads/2022/06/Thriller-Album-Cover.jpg" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://i.pinimg.com/originals/41/a0/59/41a0593ec5c6562e838f349aba5ae9ef.jpg" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://static-cse.canva.com/blob/1035320/1600w-fxYFTKLArdY.jpg" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://www.billboard.com/wp-content/uploads/2022/03/23.-Miles-Davis-%E2%80%98Bitches-Brew-1969-album-art-billboard-1240.jpg?w=600" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://play-lh.googleusercontent.com/vfPYnPDLvWa09WqmJ4fPhiklOQmGBYIGPeqPwaorTvyQqAbZw6mH7hHw3VpF0TF-qe8" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <img src="https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/1631/posts/32859/image/album-cover-maker_5a.jpg" class="card-img-top"  style="margin-bottom: 10px;">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="mt-5" style="text-align: center;">
-    <a href="/accounts/login">
-        <button class="btn btn-success">Log In</button>
-    </a>
-    <a href="/accounts/login">
-        <button class="btn btn-success">Sing up</button>
-    </a>
-</div>
-<!-- Add Bootstrap JS and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-</body>
+         </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
 </html>

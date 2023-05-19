@@ -8,6 +8,11 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+import vlc
+from django.conf import settings
+from django.http import HttpResponse
+
+
 
 
 
@@ -35,6 +40,16 @@ def song_list(request):
     return render(request, 'song_list.html', {'songs': songs})
 
 
+def play_song(request, song_id):
+    try:
+        song = Song.objects.get(pk=song_id)
+    except Song.DoesNotExist:
+        return HttpResponse("Song not found")
+
+    player = vlc.MediaPlayer(song.audio_file.path)
+    player.play()
+
+    return render(request, 'play_song.html', {'song': song})
 
 
 
