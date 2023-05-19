@@ -5,7 +5,8 @@ from .models import *
 from django.views import View
 from .forms import UserCreationForm, SongForm, EditSongForm
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
 
 from django.http import HttpResponse
@@ -80,7 +81,7 @@ def play_song(request, song_id):
 
     return render(request, "play_song.html", {"song": song})
 
-
+@login_required(login_url='login')
 def edit_song(request, pk):
     song = get_object_or_404(Song, pk=pk)
 
@@ -98,10 +99,15 @@ def edit_song(request, pk):
 
 
 # HTML views
-class SongCreate(CreateView):
+class SongCreate(LoginRequiredMixin, CreateView):
     model = Song
     template_name = "songs/form.html"
     form_class = SongForm
+
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return render(request, 'songs/error.html', {'message': 'You must be logged in to submit the form.'})
+        
 
     def form_valid(self, form):
         form.instance.user = self.request.user
