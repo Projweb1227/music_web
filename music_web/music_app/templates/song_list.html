@@ -8,11 +8,7 @@
     <ul>
         {% for song in songs %}
             <li>
-                {{ song.name }}
-                <audio controls>
-                    <source src="{{ song.audio_file.url }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <a href="{% url 'songs:play_song' song.id %}">{{ song.name }}</a>
             </li>
         {% endfor %}
     </ul>

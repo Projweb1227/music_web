@@ -7,6 +7,9 @@ from .forms import UserRegistrationForm, SongForm, EditSongForm
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
+import vlc
+from django.conf import settings
+from django.http import HttpResponse
 
 # Authocompletion
 from django.http import JsonResponse
@@ -33,6 +36,19 @@ def playlist(request):
 def song_list(request):
     songs = Song.objects.all()
     return render(request, "song_list.html", {"songs": songs})
+
+
+def play_song(request, song_id):
+    try:
+        song = Song.objects.get(pk=song_id)
+    except Song.DoesNotExist:
+        return HttpResponse("Song not found")
+
+    if song.audio_file:
+        player = vlc.MediaPlayer(song.audio_file.path)
+        player.play()
+
+    return render(request, "play_song.html", {"song": song})
 
 
 def edit_song(request, pk):

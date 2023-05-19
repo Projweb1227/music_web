@@ -90,7 +90,10 @@ class EditSongForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["author_new"].initial = self.instance.author.name
-        self.fields["album_new"].initial = self.instance.album.title
+
+        #Album known
+        if self.instance.album:
+            self.fields["album_new"].initial = self.instance.album.title
         self.fields["muscial_genre"].initial = self.instance.musicalGenre
 
     def save(self, commit=True):
