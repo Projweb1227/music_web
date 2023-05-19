@@ -5,4 +5,4 @@ django-environ==0.10.0
 whitenoise==6.4.0
 psycopg2-binary==2.9.6
 Pillow==9.5.0
-python-vlc       3.0.18122
+python-vlc==3.0.18122
