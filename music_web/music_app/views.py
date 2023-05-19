@@ -15,11 +15,27 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirigir al usuario a la URL 'home'
+            return redirect('home')  # Reemplaza 'home' con la URL deseada
+
+    return render(request, 'login.html')
 
 class HomeView:
     template_name = "base.html"
 
-
+@login_required
 def home(request):
     return render(request, "base.html")
 

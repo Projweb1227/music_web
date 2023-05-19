@@ -12,7 +12,7 @@ urlpatterns = [
     path(
         "create",
         views.SongCreate.as_view(),
-        name="song_create",
+        name="song_create"
     ),
     path("song/<int:pk>", views.SongDetail.as_view(), name="song_details"),
     path('edit/<int:pk>', views.edit_song, name='edit_song'),
