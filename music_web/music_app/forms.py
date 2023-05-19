@@ -21,7 +21,13 @@ class SongForm(ModelForm):
 
     class Meta:
         model = Song
-        fields = ["song_name", "author_name", "album_name", "musical_genre_name"]
+        fields = [
+            "song_name",
+            "author_name",
+            "album_name",
+            "musical_genre_name",
+            "musicalGenre",
+        ]
         # exclude = ("author","date", "audio_file")
 
     def checkAuthorExists(self):
