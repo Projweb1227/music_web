@@ -1,19 +1,49 @@
-from django.shortcuts import render, redirect
-
+import vlc
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView
 from .models import *
-from django.views import generic
-from .forms import UserRegistrationForm, SongForm, EditSongForm
+from django.views import View
+from .forms import UserCreationForm, SongForm, EditSongForm
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
-import vlc
-from django.conf import settings
+
 from django.http import HttpResponse
+
 
 # Authocompletion
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+
+
+#Login
+class LoginPageView(View):
+    def get(self, request):
+        return render(request, 'registration/login.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('playlist')
+
+        return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
+
+class SignUpPageView(View):
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, 'registration/register.html', {'form': form})
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('playlist')
+        return render(request, 'registration/register.html', {'form': form})
+
 
 
 class HomeView:
@@ -63,6 +93,8 @@ def edit_song(request, pk):
         form = EditSongForm(instance=song)
 
     return render(request, "songs/edit.html", {"form": form})
+
+
 
 
 # HTML views

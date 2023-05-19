@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>Log in</title>
+  <title>Sign up</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -59,37 +59,10 @@
               <div class="login-logo">
               <div>
                   <br/>
-                  <form action="{% url 'login' %}" method="post">
+                  <form method="post">
                     {% csrf_token %}
-                    <div>
-                      <h5>Username</h5>
-                      <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
-                      <div class="input-group-append">
-                      </div>
-                    </div>
-                    <br/>
-                    <h5>Password</h5>
-                    <div>
-                      <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
-                      <div class="input-group-append">
-                      </div>
-                    </div>
-                    <br/>
-                    <div class="row d-flex justify-content-center">
-                  <div>
-                    <p class="mb-1">
-                      <a href="{%  url 'password_reset' %}" >Forgot your password?</a>
-                    </p>
-                    <p class="mb-0">
-                      <a href="{% url 'signup' %}" >Sign up</a>
-                    </p>
-                  </div>
-                </div>
-                <div class="mt-5" style="text-align: center;">
-                <a href="/accounts/login">
-                    <button class="btn btn-success">Log In</button>
-                </a>
-            </div>
+                    {{ form.as_p }}
+                    <button type="submit">Sign Up</button>
                   </form>
               </div>
             </div>

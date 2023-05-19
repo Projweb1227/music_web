@@ -62,6 +62,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "music_web.wsgi.application"
 
+LOGIN_REDIRECT_URL = '/playlist'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

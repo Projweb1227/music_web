@@ -24,7 +24,8 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("", views.home, name="home"),
     path("playlist/", views.playlist, name="playlist"),
-    path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
+    path("accounts/login/", views.LoginPageView.as_view(), name="login"),
+    path("accounts/register/", views.SignUpPageView.as_view(), name="signup"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("songs/", include("music_app.urls", namespace="songs")),
 ]
