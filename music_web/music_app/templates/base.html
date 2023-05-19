@@ -8,8 +8,8 @@
         <nav>
             <ul>
                 {% if user.is_authenticated %}
-                    <li>&nbsp<a href="{% url 'song_list' %}">Cançons</a></li>
-                    <li>&nbsp<a href="{% url 'paylist' %}">Playlists</a></li>
+                    <li>&nbsp<a href="{% url 'songs:song_list' %}">Cançons</a></li>
+                    <li>&nbsp<a href="{% url 'playlist' %}">Playlists</a></li>
                 {% else %}
                 <a class="cta" href="/accounts/login">
                 &nbsp<button>Log In</button>

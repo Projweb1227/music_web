@@ -101,3 +101,106 @@
   </div>
   
 </body>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Log in</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!---<title>AdminLTE 3 | Log in</title> --->
+  <link href="{% static 'css/login.css' %}" rel="stylesheet">
+
+  <style>
+    .custom-card {
+      width: 50%;
+      margin: 0 auto;
+      margin-top: 10px;
+    }
+
+    .thead-custom {
+      background-color: #32CD32;
+      /* Replace with your desired color */
+      color: #030303;
+      /* Replace with your desired text color */
+    }
+
+  </style>
+
+</head>
+
+<body class="hold-transition login-page" style="background-color: #90EE90;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card custom-card border-0 " style="background-color: #90EE90;">
+          <div class="card-body">
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/5bb012bbebfc7fd066b157e0/1542410001222-82VJBY1X6TQPL68C437L/Moods%26Melody-Logo.png"
+              class="card-img-top" style="margin-bottom: 10px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-7">
+        <div class="card shadow h-100">
+          <div class="card-body">
+            <img src="https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/1631/posts/32859/image/album-cover-maker_5a.jpg" class="card-img-top"  style="margin-bottom: 10px;">
+          </div>
+        </div>
+      </div>
+      <div class="col-5 text-center">
+        <div class="card shadow h-100">
+          <div class="card-body mt-5">
+            <div class="login-box">
+              <div class="login-logo">
+              <div>
+                  <br/>
+                  <form action="#" method="post">
+                    {% csrf_token %}
+                    <div>
+                      <h5>Username</h5>
+                      <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                      <div class="input-group-append">
+                      </div>
+                    </div>
+                    <br/>
+                    <h5>Password</h5>
+                    <div>
+                      <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                      <div class="input-group-append">
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="row d-flex justify-content-center">
+                  <div>
+                    <p class="mb-1">
+                      <a href="{%  url 'password_reset' %}" >Forgot your password?</a>
+                    </p>
+                    <p class="mb-0">
+                      <a href="{% url 'login' %}" >Sign up</a>
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-5" style="text-align: center;">
+                <a href="/accounts/login">
+                    <button class="btn btn-success">Log In</button>
+                </a>
+            </div>
+                  </form>
+              </div>
+            </div>
+            </div>
+          </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  
+</body>
