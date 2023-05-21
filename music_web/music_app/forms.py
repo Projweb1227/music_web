@@ -13,7 +13,10 @@ class UserRegistrationForm(UserCreationForm):
         fields = ["username", "email", "password1", "password2"]
 
 
-class SongForm(ModelForm):
+from django import forms
+from .models import Song, MusicalGenre, Album, Author
+
+class SongForm(forms.ModelForm):
     musical_genre_name = forms.ModelChoiceField(
         queryset=MusicalGenre.objects.all(),
         label="Genre",
@@ -23,6 +26,7 @@ class SongForm(ModelForm):
     )
     author_name = forms.CharField(label="Author", max_length=100, required=True)
     album_name = forms.CharField(label="Album", max_length=100, required=False)
+    audio_file = forms.FileField(label="Audio File", required=False)
 
     class Meta:
         model = Song
@@ -31,8 +35,9 @@ class SongForm(ModelForm):
             "author_name",
             "album_name",
             "musical_genre_name",
+            "audio_file",
         ]
-        labels = {"name": "Tittle"}
+        labels = {"name": "Title"}
         widgets = {
             "name": forms.TextInput(),
         }
@@ -49,7 +54,6 @@ class SongForm(ModelForm):
                 title=album_name, author=instance.author
             )
 
-
         musical_genre_name = self.cleaned_data["musical_genre_name"]
         if musical_genre_name:
             instance.musicalGenre, _ = MusicalGenre.objects.get_or_create(
@@ -63,8 +67,9 @@ class SongForm(ModelForm):
         return instance
 
 
+
 class EditSongForm(forms.ModelForm):
-    muscial_genre = forms.ModelChoiceField(
+    musical_genre = forms.ModelChoiceField(
         queryset=MusicalGenre.objects.all(),
         label="Genre",
         required=False,
@@ -73,6 +78,7 @@ class EditSongForm(forms.ModelForm):
     )
     author_new = forms.CharField(label="Author", max_length=100, required=True)
     album_new = forms.CharField(label="Album", max_length=100, required=False)
+    audio_file = forms.FileField(label="Audio File", required=False)  # Added field for editing audio_file
 
     class Meta:
         model = Song
@@ -80,9 +86,10 @@ class EditSongForm(forms.ModelForm):
             "name",
             "author_new",
             "album_new",
-            "muscial_genre",
+            "musical_genre",
+            "audio_file",  # Added audio_file field to the form
         ]
-        labels = {"name": "Tittle"}
+        labels = {"name": "Title"}
         widgets = {
             "name": forms.TextInput(),
         }
@@ -91,10 +98,10 @@ class EditSongForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["author_new"].initial = self.instance.author.name
 
-        #Album known
+        # Album known
         if self.instance.album:
             self.fields["album_new"].initial = self.instance.album.title
-        self.fields["muscial_genre"].initial = self.instance.musicalGenre
+        self.fields["musical_genre"].initial = self.instance.musicalGenre
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -108,6 +115,12 @@ class EditSongForm(forms.ModelForm):
             album, _ = Album.objects.get_or_create(title=album_new)
             instance.album = album
 
+        # Check if a new audio file was provided
+        audio_file = self.cleaned_data.get("audio_file")
+        if audio_file:
+            instance.audio_file = audio_file
+
         if commit:
             instance.save()
         return instance
+

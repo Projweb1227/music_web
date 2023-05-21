@@ -1,26 +1,43 @@
-{% extends "songs/base.html" %}
+
 
 {% block content %}
 <h2>Create a Song</h2>
 <form method="post" enctype="multipart/form-data" action="">
     {% csrf_token %}
-    <table>
-        {{ form.as_div }}
-        <script>
-            $(document).ready(function () {
-                $("#id_author_new").autocomplete({
-                    source: "{% url 'songs:author_suggestions' %}",
-                    minLength: 2, // Minimum characters to start suggesting
-                    delay: 300, // Delay in milliseconds before making the request
-                });
-                $("#id_album_new").autocomplete({
-                    source: "{% url 'songs:album_suggestions' %}",
-                    minLength: 2, // Minimum characters to start suggesting
-                    delay: 300, // Delay in milliseconds before making the request
-                });
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.author_name.id_for_label }}">{{ form.author_name.label }}</label>
+        {{ form.author_name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.album_name.id_for_label }}">{{ form.album_name.label }}</label>
+        {{ form.album_name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.musical_genre_name.id_for_label }}">{{ form.musical_genre_name.label }}</label>
+        {{ form.musical_genre_name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.audio_file.id_for_label }}">{{ form.audio_file.label }}</label>
+        {{ form.audio_file }}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#id_author_new").autocomplete({
+                source: "{% url 'songs:author_suggestions' %}",
+                minLength: 2, // Minimum characters to start suggesting
+                delay: 300, // Delay in milliseconds before making the request
             });
-        </script>
-    </table>
+            $("#id_album_new").autocomplete({
+                source: "{% url 'songs:album_suggestions' %}",
+                minLength: 2, // Minimum characters to start suggesting
+                delay: 300, // Delay in milliseconds before making the request
+            });
+        });
+    </script>
     <div class="text-center">
         <input type="submit" value="Submit" class="btn btn-success mt-3 shadow" />
     </div>

@@ -2,42 +2,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Play Song</title>
+    <title>Reproducir canción</title>
     <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'howler/howler.min.js' %}"></script>
 </head>
 <body>
-    <h1>Play Song</h1>
-    <h2>{{ song.name }}</h2>
-    <audio id="audioPlayer" src="{{ song.audio_file.url }}"></audio>
-    <br>
-    <button id="playButton">Play</button>
-    <button id="pauseButton">Pause</button>
-    <button id="stopButton">Stop</button>
-    <br>
-    <button onclick="goBack()">Back</button>
+    <h1>{{ song.name }}</h1>
+    <button id="playBtn">Reproducir</button>
+    <button id="pauseBtn">Pausar</button>
 
     <script>
         $(document).ready(function() {
-            var audio = $("#audioPlayer")[0];
-
-            $("#playButton").click(function() {
-                audio.play();
+            var sound = new Howl({
+                src: ["{{ song.audio_file.url }}"],
+                html5: true
             });
 
-            $("#pauseButton").click(function() {
-                audio.pause();
+            var playButton = document.getElementById("playBtn");
+            var pauseButton = document.getElementById("pauseBtn");
+
+            playButton.addEventListener("click", function() {
+                try {
+                    sound.play();
+                } catch (error) {
+                    showErrorAlert(error);
+                }
             });
 
-            $("#stopButton").click(function() {
-                audio.pause();
-                audio.currentTime = 0;
+            pauseButton.addEventListener("click", function() {
+                try {
+                    sound.pause();
+                } catch (error) {
+                    showErrorAlert(error);
+                }
             });
 
-            function goBack() {
+            function showErrorAlert(error) {
+                var errorMessage = "Se produjo un error: " + error.message;
+                window.alert(errorMessage);
                 window.history.back();
             }
         });
     </script>
 </body>
 </html>
+
+
 

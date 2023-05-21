@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
+import os
+from django.conf import settings
 
 
 class Author(models.Model):
@@ -41,6 +43,13 @@ class Playlist(models.Model):
     def __str__(self):
         return self.name
 
+def song_file_path(instance, filename):
+    # Obtiene la ruta completa hacia la carpeta "songs_save" en tu proyecto Django
+    base_path = os.path.join(settings.MEDIA_ROOT, 'songs_save')
+
+    # Genera la ruta de almacenamiento del archivo dentro de la carpeta "songs_save"
+    # en función del nombre del archivo y el ID de la instancia
+    return os.path.join(base_path, str(instance.pk), filename)
 
 class Song(models.Model):
     name = models.TextField(max_length=100)
@@ -60,7 +69,7 @@ class Song(models.Model):
         blank=True,
     )
     image = models.ImageField(null=True, blank=True)
-    audio_file = models.FileField(blank=True, null=False, default="")
+    audio_file = models.FileField(upload_to=song_file_path, blank=True, null=False, default="")
     duration = models.CharField(max_length=10, null=True, blank=True, default="-")
     date = models.DateField(default=date.today)
 

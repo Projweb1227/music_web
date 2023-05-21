@@ -34,7 +34,7 @@ class LoginPageView(View):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('playlist')
+            return redirect('home')
 
         return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
 
@@ -47,8 +47,9 @@ class SignUpPageView(View):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('playlist')
+            return redirect('home')  # Cambiar 'playlist' por 'home'
         return render(request, 'registration/register.html', {'form': form})
+
 
 
 
@@ -75,16 +76,8 @@ def song_list(request):
 
 
 def play_song(request, song_id):
-    try:
-        song = Song.objects.get(pk=song_id)
-    except Song.DoesNotExist:
-        return HttpResponse("Song not found")
-
-    if song.audio_file:
-        player = vlc.MediaPlayer(song.audio_file.path)
-        player.play()
-
-    return render(request, "play_song.html", {"song": song})
+    song = Song.objects.get(pk=song_id)
+    return render(request, 'play_song.html', {'song': song})
 
 @login_required(login_url='login')
 def delete_song(request, pk):

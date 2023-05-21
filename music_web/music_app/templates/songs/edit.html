@@ -1,11 +1,9 @@
-{% extends "songs/base.html" %}
-
 {% block content %}
 <h2>Edit the Song</h2>
 <form method="post" enctype="multipart/form-data" action="">
     {% csrf_token %}
     <table>
-        {{ form.as_div }}
+        {{ form.as_table }}
         <input type="hidden" name="delete" value="true">
         <button type="button" class="btn btn-danger mt-3 shadow" id="delete-button">Delete Song</button>
         <script>
@@ -22,20 +20,15 @@
                 });
             });
 
-            
+            document.getElementById("delete-button").addEventListener("click", function() {
+                if (confirm("Are you sure you want to delete this song?")) {
+                    document.getElementById("delete-form").submit();
+                }
+            });
         </script>
     </table>
     <div class="text-center">
         <input type="submit" value="Submit" class="btn btn-success mt-3 shadow" />
     </div>
 </form>
-
-
-<script>
-    document.getElementById("delete-button").addEventListener("click", function() {
-        if (confirm("Are you sure you want to delete this song?")) {
-            document.getElementById("delete-form").submit();
-        }
-    });
-</script>
 {% endblock %}

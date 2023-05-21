@@ -1,23 +1,119 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %} - Music Engine</title>
-    </head>
-    <body>
-        <nav>
-            <ul>
-                {% if user.is_authenticated %}
-                    <li>&nbsp<a href="{% url 'songs:song_list' %}">Cançons</a></li>
-                    <li>&nbsp<a href="{% url 'playlist' %}">Playlists</a></li>
-                {% else %}
-                <a class="cta" href="/accounts/login">
-                &nbsp<button>Log In</button>
-                </a>
-                {% endif %}
-            </ul>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - Music Engine</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #90EE90;
+        }
 
-         </nav>
-        {% block content %}
-        {% endblock %}
-    </body>
+        ul li {
+            /*Treure el "·" de la llista*/
+            list-style: none;
+        }
+
+        /*login i home¿?*/
+
+        .wrapper {
+            display: inline-block;
+        }
+
+        .center {
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #content {
+            background-color: #fff;
+            box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.131);
+            width: 500px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        div label {
+            /*Titols*/
+            font-weight: 500;
+            /*L'altre te un font-family diferent*/
+            font-size: 18px;
+        }
+
+        #content h2 {
+            padding-top: 60px;
+            margin: 0px;
+        }
+
+        #content form {
+            margin-top: 40px;
+        }
+
+        #content form div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Modify (Pots eliminar el de baix i et quedarà com quedava a la captura) inicia ------> */
+
+        #header {
+            display: flex;
+            width: 100px;
+            /*error?¿*/
+            float: left;
+        }
+
+        #sidebar {
+            display: flex;
+            width: 100px;
+        }
+
+        #sidebar>ul {
+            /* Molt més forçat entrar dins del div, però em donava error al fer #sliderbar ul{ */
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #header>p {
+            padding: 0px;
+        }
+
+        #sidebar>ul>li {
+            padding-left: 6px;
+        }
+
+        #sidebar>ul>li>a {
+            margin: 0px;
+        }
+
+        /* <----------- finalitza */
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+                <li>&nbsp<a href="{% url 'songs:song_list' %}">Cançons</a></li>
+                <li>&nbsp<a href="{% url 'playlist' %}">Playlists</a></li>
+            {% else %}
+                <a class="cta" href="/accounts/login">
+                    &nbsp<button>Log In</button>
+                </a>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="center wrapper">
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
 </html>
