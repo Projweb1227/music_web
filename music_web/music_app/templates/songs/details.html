@@ -136,45 +136,22 @@
                     class="card-img-top">
             </div>
 
-            <div class="detalls">
-                <h5>Song Detaiis</h5>
-
-                <div id="info">
-                    <h2>Tittle:</h2>
-                    <h3>{{ song.name }}</h3>
-                </div>
-
-                <div id="info">
-                    <h2>Author:</h2>
-                    <h3>{{ song.author }}</h3>
-                </div>
-
-                <div id="info">
-                    <h2>Album:</h2>
-                    <h3>{{ song.album }}</h3>
-                </div>
-
-                <div id="info">
-                    <h2>Genre:</h2>
-                    <h3>{{ song.musicGenre }}</h3>
-                </div>
-
-                <div id="info">
-                    <h2>Duration:</h2>
-                    <h3>{{ song.duration }}</h3>
-                </div>
-
-                <div id="date">
-
-                    <h2>Added: {{ song.date }}</h2>
-
-                </div>
-
+            <div class="container" vocab="https://schema.org/" typeof="MusicRecording">
+                <h3><b>&Song Name:</b> &nbsp <span property="name" > {{song.name }} </span></h3>
+                <h3><b>&Song Artist:</b> &nbsp <span property="byArtist" > {{song.author }} </span></h3>
+                <h3><b>&Song Album:</b> &nbsp <span property="inAlbum" > {{song.album }} </span></h3>
+                <h3><b>&Song Genre:</b> &nbsp <span property="genre" > {{song.musicGenre}} </span></h3>
+                <h3><b>&Song Image:</b> &nbsp <span property="thumbnail" > {{song.image }} </span></h3>
+                <h3><b>&Song audio_file:</b> &nbsp <span property="audio" > {{song.audio_file}} </span></h3>
+                <h3><b>&Song Duration:</b> &nbsp <span property="duration" > {{song.duration }} </span></h3>ç
+                <h3><b>&Song Creation Date:</b> &nbsp <span property="dateCreated" > {{song.date }} </span></h3>
+        
             </div>
 
         </div>
 
     </div>
+   
 
 </body>
 
